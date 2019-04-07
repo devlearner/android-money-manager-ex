@@ -55,6 +55,21 @@ android {
         release.setRoot('build-types/release')
     }
 
+    def isRunningOnTravis = System.getenv("CI") == "true"
+
+    if (isRunningOnTravis) {
+        defaultConfig {
+            applicationId applicationId + ".travis"
+            versionName versionName + "-travis"
+            setProperty("archivesBaseName", "ammx-$versionName")
+        }
+        buildTypes {
+            beta {
+                initWith debug
+            }
+        }
+    }
+
 //    buildTypes {
 //        debug {
 //            applicationIdSuffix ".debug"
